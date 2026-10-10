@@ -182,7 +182,7 @@ const PERSONA = {
   "agente": "agent_3101m4fdcm06eje9f09n4tqwxz90",
   "modelo": "modelo.glb",
   "vista": false,
-  "fraseDemo": "Buenas tardes. Pasá, ponete cómodo. Soy Simón, y acá conversamos sobre psicoanálisis. ¿Por dónde querés empezar?",
+  "fraseDemo": "¡Hola! Vení, acercate y charlemos... Soy Simón, y me encanta conversar sobre psicoanálisis. ¿Por dónde querés empezar?",
   "apariencia": {
     "piel": "#a77b6e",
     "ojos": "#6f7f8a",
@@ -224,7 +224,7 @@ const PERSONA = {
       "panuelo": false
     },
     "objeto": {
-      "tipo": "libro",
+      "tipo": "mate",
       "franjas": [
         "#7fb6cf",
         "#f2eee3",
@@ -1362,12 +1362,38 @@ for(const dz of[-1,1]){caja(5*L,0.12,0.14,0xe6e2d8,BX+2.5*L,4.25,Z0+dz*(ANCHO/2+
 // rampa de acceso
 {const s=new THREE.Shape();s.moveTo(-26,0);s.lineTo(BX,0);s.lineTo(BX,3.2);s.closePath();const m=new THREE.Mesh(new THREE.ExtrudeGeometry(s,{depth:ANCHO+0.4,bevelEnabled:false}),mat(0xcdb98f,0.95));m.position.z=Z0-ANCHO/2-0.2;m.castShadow=m.receiveShadow=true;mundo.add(m);}
 // cartel "Puente Libertad"
-{const c=document.createElement('canvas');c.width=1024;c.height=256;const g=c.getContext('2d');g.fillStyle='#0b5d3b';g.fillRect(0,0,1024,256);g.strokeStyle='#fff';g.lineWidth=10;g.strokeRect(14,14,996,228);g.fillStyle='#fff';g.textAlign='center';g.font='bold 118px Arial,sans-serif';g.fillText('PUENTE LIBERTAD',512,150);g.font='46px Arial,sans-serif';g.fillText('Río Bermejo',512,216);
+{const c=document.createElement('canvas');c.width=1024;c.height=256;const g=c.getContext('2d');g.fillStyle='#0b5d3b';g.fillRect(0,0,1024,256);g.strokeStyle='#fff';g.lineWidth=10;g.strokeRect(14,14,996,228);g.fillStyle='#fff';g.textAlign='center';let fs=104;g.font='bold '+fs+'px Arial,sans-serif';while(g.measureText('PUENTE LIBERTAD').width>900)g.font='bold '+(--fs)+'px Arial,sans-serif';g.fillText('PUENTE LIBERTAD',512,150);g.font='46px Arial,sans-serif';g.fillText('Río Bermejo',512,216);
  const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=8;
- const cart=new THREE.Mesh(new THREE.BoxGeometry(2.4,0.6,0.05),[mat(0x333333),mat(0x333333),mat(0x333333),mat(0x333333),new THREE.MeshStandardMaterial({map:t,roughness:0.6}),mat(0x333333)]);cart.position.set(1.0,2.15,-4.2);cart.scale.set(0.85,0.85,1);cart.castShadow=true;mundo.add(cart);
- caja(0.08,2.2,0.08,0x555555,0.05,1.1,-4.2);caja(0.08,2.2,0.08,0x555555,1.95,1.1,-4.2);}
+ const cart=new THREE.Mesh(new THREE.BoxGeometry(2.4,0.6,0.05),[mat(0x333333),mat(0x333333),mat(0x333333),mat(0x333333),new THREE.MeshStandardMaterial({map:t,roughness:0.6}),mat(0x333333)]);cart.position.set(0.75,2.15,-4.2);cart.scale.set(0.85,0.85,1);cart.castShadow=true;mundo.add(cart);
+ caja(0.08,2.2,0.08,0x555555,-0.2,1.1,-4.2);caja(0.08,2.2,0.08,0x555555,1.7,1.1,-4.2);}
 // árboles
 for(const[x,z,s]of[[-8,-14,1.3],[-20,-3,1],[-34,-12,1.4],[-2,-18,1.5],[9,-14,1.2],[-26,6,1.1],[4,5,0.9],[-14,-18,1.2]]){const a=new THREE.Group();const tr=new THREE.Mesh(new THREE.CylinderGeometry(0.18,0.25,2.4,8),mat(0x5a4330));tr.position.y=1.2;const cp=new THREE.Mesh(new THREE.SphereGeometry(1.7,12,10),mat(0x3f7a34,0.95));cp.position.y=3.6;cp.scale.y=0.85;tr.castShadow=cp.castShadow=true;a.add(tr,cp);a.position.set(x,0,z);a.scale.setScalar(s);mundo.add(a);}
+
+// loro de frente turquesa posado sobre el cartel
+const loro=new THREE.Group();{const esf=(r,c,x,y,z,sx=1,sy=1,sz=1)=>{const m=new THREE.Mesh(new THREE.SphereGeometry(r,16,12),mat(c,0.7));m.position.set(x,y,z);m.scale.set(sx,sy,sz);m.castShadow=true;loro.add(m);return m;};
+ esf(0.07,0x4fa23a,0,0.14,0,1,1.45,0.95);esf(0.052,0xf2c230,0,0.29,0.015);esf(0.032,0xf4f1e6,0,0.325,0.03,1.1,0.8,1);esf(0.018,0x4fc3d8,0,0.322,0.062);
+ esf(0.034,0xf2c230,-0.06,0.2,0.0,0.7,1,1.2);
+ const pico=new THREE.Mesh(new THREE.ConeGeometry(0.02,0.045,8),mat(0x222222));pico.position.set(0,0.28,0.062);pico.rotation.x=Math.PI*0.62;loro.add(pico);
+ for(const sx of[-1,1]){const o=esf(0.008,0xd8561c,sx*0.027,0.3,0.05);}
+ const cola=new THREE.Mesh(new THREE.ConeGeometry(0.045,0.3,8),mat(0x5fb04a));cola.position.set(0,0.0,-0.09);cola.rotation.x=-0.35;cola.scale.z=0.35;cola.geometry.translate(0,-0.1,0);loro.add(cola);
+ const ala=esf(0.04,0x3f8a34,0.06,0.13,-0.01,0.6,1.5,0.9);esf(0.012,0xd8461c,0.07,0.07,-0.04,1,1.5,1);
+ for(const sx of[-1,1]){const pie=new THREE.Mesh(new THREE.CylinderGeometry(0.008,0.008,0.05,6),mat(0x888888));pie.position.set(sx*0.025,0.01,0.01);loro.add(pie);}
+ loro.position.set(1.45,2.405,-4.2);loro.rotation.y=-0.55;mundo.add(loro);loro.userData.cabeza=loro.children[1];}
+// vegetación: palmeras, gramillas, cañaverales y arbustos
+const azar=(()=>{let a=7;return()=>{a=(a*16807)%2147483647;return a/2147483647;};})();
+function palma(x,z,h){const g=new THREE.Group();const tr=new THREE.Mesh(new THREE.CylinderGeometry(0.1,0.16,h,8),mat(0x8a7556));tr.position.y=h/2;tr.castShadow=true;g.add(tr);
+ for(let i=0;i<13;i++){const p=new THREE.Group();p.position.y=h;p.rotation.y=i*Math.PI*2/13;const geo=new THREE.ConeGeometry(0.11,2.3,5);geo.translate(0,1.15,0);const f=new THREE.Mesh(geo,mat(i%2?0x4f9a3a:0x3f8230,0.9));f.rotation.z=-(1.0+(i%3)*0.18);f.scale.z=0.18;f.castShadow=true;p.add(f);g.add(p);}
+ g.position.set(x,0,z);mundo.add(g);}
+for(const[x,z,h]of[[-6,-14.5,6],[3,-12.5,5],[7.5,-6.5,4.5],[-30,-3,6.5],[-22,-14,5.5],[-40,-8,6],[-12,3.5,4]])palma(x,z,h);
+const pasto=new THREE.InstancedMesh(new THREE.ConeGeometry(0.035,0.4,4),new THREE.MeshStandardMaterial({color:0x5f9a30,roughness:1}),1500);let n=0;const tm=new THREE.Matrix4(),q=new THREE.Quaternion(),e=new THREE.Euler(),col=new THREE.Color();
+while(n<1500){const x=-55+azar()*66,z=-16+azar()*24;if(x>-27&&x<-13&&Math.abs(z-Z0)<3)continue;if(n<400&&(Math.abs(x)>3.5||z<-4||z>4.2)){}
+ for(let k=0;k<3&&n<1500;k++){e.set((azar()-.5)*0.6,azar()*6,(azar()-.5)*0.6);q.setFromEuler(e);const sc=0.6+azar()*1.2;tm.compose(new THREE.Vector3(x+(azar()-.5)*0.25,0.15*sc,z+(azar()-.5)*0.25),q,new THREE.Vector3(1,sc,1));pasto.setMatrixAt(n,tm);col.setScalar(0.7+azar()*0.5);pasto.setColorAt(n,col);n++;}}
+mundo.add(pasto);
+const juncos=new THREE.InstancedMesh(new THREE.CylinderGeometry(0.008,0.013,1,5),new THREE.MeshStandardMaterial({color:0x8fa043,roughness:1}),140);
+for(let i=0;i<140;i++){const h=1.0+azar()*1.2;e.set((azar()-.5)*0.3,0,(azar()-.5)*0.3);q.setFromEuler(e);tm.compose(new THREE.Vector3(11.4+azar()*1.6,h/2-0.1,-16+azar()*24),q,new THREE.Vector3(1,h,1));juncos.setMatrixAt(i,tm);col.setScalar(0.75+azar()*0.4);juncos.setColorAt(i,col);}
+mundo.add(juncos);
+for(let i=0;i<16;i++){const b=new THREE.Mesh(new THREE.SphereGeometry(0.5+azar()*0.4,10,8),mat(i%3?0x35722e:0x4a8a3a,0.95));b.scale.y=0.7;const x=11.2+azar()*1.8,z=-16+azar()*24;b.position.set(x,0.3,z);b.castShadow=true;mundo.add(b);}
+for(let i=0;i<14;i++){const c=new THREE.Mesh(new THREE.CylinderGeometry(0.4+azar()*0.35,0.4,0.04,12),mat(0x4f9a3a,0.8));c.position.set(14.5+azar()*4,-1.05,-15+azar()*22);mundo.add(c);}
 // piernas, ropa actual (pantalón y zapatillas)
 const piernas=[];for(const sx of[-1,1]){const p=new THREE.Group();p.position.set(sx*0.09,0.68,0);
  const pa=new THREE.Mesh(new THREE.CylinderGeometry(0.075,0.058,0.6,12),mat(0x9a8a6e,0.85));pa.position.y=-0.3;
@@ -1382,18 +1408,19 @@ function mover(dx,dz,dt){let nx=E.x+dx,nz=E.z+dz;
  if(E.arriba){nz=Math.max(Z0-ANCHO/2+0.4,Math.min(Z0+ANCHO/2-0.4,nz));if(nx>BX+5*L-1)nx=BX+5*L-1;if(nx<-26.3){E.arriba=false;nx=-27;}}
  else{ if(enCalz(nx,nz)&&nx>-26&&nx<BX){ if(E.x<=-26&&dx>0)E.arriba=true; else {nx=E.x;} }
   if(Math.abs(nz-Z0)<ANCHO/2+0.3)for(const pc of[-14,-4,6]){if(Math.abs(nx-pc)<1.2){nx=E.x;nz=E.z;}}
-  nx=Math.max(-60,Math.min(12,nx));nz=Math.max(-16,Math.min(8,nz));}
+  nx=Math.max(-60,Math.min(10.4,nx));nz=Math.max(-16,Math.min(8,nz));}
  E.x=nx;E.z=nz;}
 addEventListener('keydown',e=>{if(e.target.closest?.('input,textarea'))return;const k=e.key.toLowerCase();if('wasd'.includes(k)&&k.length==1||k==='arrowup'||k==='arrowdown'){E.tecla[k]=true;E.ruta=[];e.preventDefault();}});
 addEventListener('keyup',e=>{delete E.tecla[e.key.toLowerCase()];});
 const ir=pts=>{E.ruta=pts.map(p=>({x:p[0],z:p[1]}));};
 const barra=document.createElement('div');barra.style.cssText='position:fixed;z-index:3;left:12px;top:12px;display:flex;flex-direction:row;flex-wrap:wrap;gap:6px;max-width:min(720px,70vw)';
-const bs=[['Bajo el puente',()=>{if(E.arriba)ir([[-27,-8]]);ir([[-27,-8],[-26.5,-3],[-8,-3],[-1,-8],[-9,-6.5]].slice(E.arriba?0:1));}],['Sobre el puente',()=>{ir([[-31,-8],[-30,-8],[-12,-8],[-2,-8]]);}],['Al río Bermejo',()=>{ir(E.arriba?[[-27,-8],[-26.5,-3],[10.5,-3]]:[[10.5,-3]]);}],['Volver al cartel',()=>{ir(E.arriba?[[-27,-8],[-26.5,-3],[0.6,0.6]]:[[0.6,0.6]]);}]];
+const bs=[['Bajo el puente',()=>{if(E.arriba)ir([[-27,-8]]);ir([[-27,-8],[-26.5,-3],[-8,-3],[-1,-8],[-9,-6.5]].slice(E.arriba?0:1));}],['Sobre el puente',()=>{ir([[-31,-8],[-30,-8],[-12,-8],[-2,-8]]);}],['Al río Bermejo',()=>{ir(E.arriba?[[-27,-8],[-26.5,-3],[10.2,-3]]:[[10.2,-3]]);}],['Volver al cartel',()=>{ir(E.arriba?[[-27,-8],[-26.5,-3],[0.6,0.6]]:[[0.6,0.6]]);}]];
 for(const[t,f]of bs){const b=document.createElement('button');b.textContent=t;b.style.cssText='padding:6px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.5);background:rgba(20,28,20,.72);color:#fff;font:600 13px system-ui,sans-serif;cursor:pointer';b.onclick=f;barra.append(b);}
 const ay=document.createElement('div');ay.style.cssText='font:12px system-ui;color:#fff;background:rgba(20,28,20,.6);padding:6px 8px;border-radius:8px';ay.textContent='Caminá con W A S D o las flechas ↑ ↓';barra.append(ay);document.body.append(barra);
 let ant=new THREE.Vector3();
 window.HDM={E,tp:(x,z,a)=>{E.x=x;E.z=z;E.arriba=!!a;}};
 window.__mundo=(dt,t)=>{
+ loro.userData.cabeza.rotation.z=Math.sin(t*1.7)*0.12;loro.rotation.y=-0.55+Math.sin(t*0.6)*0.18;
  let fx=0,fz=0;const T=E.tecla;if(T.w||T.arrowup)fz-=1;if(T.s||T.arrowdown)fz+=1;if(T.a)fx-=1;if(T.d)fx+=1;
  let mx=0,mz=0;
  if(fx||fz){const f=new THREE.Vector3();camera.getWorldDirection(f);f.y=0;f.normalize();const r=new THREE.Vector3(-f.z,0,f.x);mx=f.x*-fz+r.x*fx;mz=f.z*-fz+r.z*fx;}
@@ -1481,11 +1508,13 @@ function crearObjeto(tipo){
       return { g, agarre:'palma', inclinar:-0.55 };
     }
     case 'mate': {
-      pon(esfera(0.038, new THREE.MeshStandardMaterial({ color:0x6b5a2a, roughness:0.55 }), 1, 1.15, 1), 0, 0.042, 0);
-      const aro = pon(malla(new THREE.TorusGeometry(0.029, 0.0045, 8, 28), M.metal), 0, 0.083, 0); aro.rotation.x = Math.PI/2;
-      const yerba = pon(malla(new THREE.CircleGeometry(0.027, 24), new THREE.MeshStandardMaterial({ color:0x6f8a2c, roughness:0.9 })), 0, 0.082, 0); yerba.rotation.x = -Math.PI/2;
-      const bomb = pon(cil(0.003, 0.003, 0.14, M.metal, 8), 0.014, 0.12, 0); bomb.rotation.z = -0.28;
-      return { g, agarre:'palma', inclinar:0 };
+      const cal = new THREE.MeshStandardMaterial({ color:0xb5541f, roughness:0.5 });
+      pon(esfera(0.029, cal, 1, 1.18, 1), 0, -0.004, 0);
+      const aro = pon(malla(new THREE.TorusGeometry(0.0225, 0.004, 8, 28), M.metal), 0, 0.031, 0); aro.rotation.x = Math.PI/2;
+      const yerba = pon(malla(new THREE.CircleGeometry(0.021, 24), new THREE.MeshStandardMaterial({ color:0x6f8a2c, roughness:0.9 })), 0, 0.03, 0); yerba.rotation.x = -Math.PI/2;
+      const bomb = pon(cil(0.0026, 0.0026, 0.17, M.metal, 8), 0.012, 0.105, 0); bomb.rotation.z = -0.22;
+      const pico = pon(cil(0.0026, 0.0026, 0.04, M.metal, 8), 0.0483, 0.202, 0); pico.rotation.z = -1.1;
+      return { g, agarre:'puno', pose:'sosten', dir:[0.12, 1, 0.3] };
     }
     case 'globo': {
       pon(cil(0.05, 0.055, 0.012, M.maderaOscura, 32), 0, 0.006, 0);
